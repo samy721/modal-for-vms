@@ -1,0 +1,7 @@
+/* Add application styles & imports to this file! */
+@import '~angular-tree-component/dist/angular-tree-component.css';
+tree-viewport {
+  -webkit-tap-highlight-color: transparent;
+  height: 350px;
+  display: block;
+}

@@ -1,0 +1,81 @@
+<div class="tree">
+  <div
+    id="tree-header"
+    style="padding: 10px 6px"
+    class="d-flex justify-content-between align-center"
+  >
+    <h4>Label</h4>
+    <h4>Type</h4>
+  </div>
+  <div class="line"></div>
+  <tree-root
+    #tree
+    id="tree2"
+    [focused]="true"
+    [nodes]="nodes"
+    [options]="options"
+    (activate)="activeOptions($event)"
+    (deactivate)="deactivateOptions($event)"
+  >
+    <ng-template
+      #treeNodeFullTemplate
+      let-node
+      let-index="index"
+      let-templates="templates"
+    >
+      <div>
+        <div style="display: flex; gap: 4px; padding: 6px" class="mg-15">
+          <tree-node-expander
+            class="tree-node-expander-arrow"
+            [node]="node"
+          ></tree-node-expander>
+          <div
+            [class.node-content-wrapper-active]="node.isActive"
+            [class.node-content-wrapper-focused]="node.isFocused"
+            style="margin-top: 5px; margin-bottom: 5px"
+          >
+            <div style="position:absolute;display:flex;">
+              <input
+                class="form-control name-field"
+                type="text"
+                [(ngModel)]="node.data.label"
+                [id]="'nameField' + node.id"
+                [attr.aria-describedby]="'nameFieldValidator' + node.id"
+                style="position:static"
+              />
+              <button
+                *ngIf="node.data.selectedType == 'select'"
+                (click)="addNode(node)"
+                class="btn btn-default btn-sm m-center orange-txt"
+                title="Add Node"
+                data-placement="bottom"
+                data-toggle="tooltip"
+              >
+                <span class="glyphicon glyphicon-plus"></span>
+              </button>
+            </div>
+            <select
+              *ngIf="node.data.parentType != 'select'"
+              id="type"
+              name="type"
+              [(ngModel)]="node.data.selectedType"
+              (change)="onTypeChange(node)"
+              class="form-control pull-right"
+              style="width:150px;height:34px"
+            >
+              <option value="input">Input box</option>
+              <option value="select">Single-select</option>
+              <!-- <option value="multiselect">Multi-select</option> -->
+              <option value="date">Date</option>
+              <option value="textArea">Text-Area</option>
+            </select>
+          </div>
+        </div>
+        <tree-node-children
+          [node]="node"
+          [templates]="templates"
+        ></tree-node-children>
+      </div>
+    </ng-template>
+  </tree-root>
+</div>
