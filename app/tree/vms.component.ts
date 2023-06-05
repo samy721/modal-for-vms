@@ -10,7 +10,7 @@ import { v4 as uuid } from 'uuid';
 export class MyComponent {
   @ViewChild(TreeComponent)
   private tree: TreeComponent;
-
+  showModalForFile: boolean = false;
   nodes = [
     {
       label: 'Parent 1',
@@ -19,6 +19,8 @@ export class MyComponent {
       id: uuid(),
       level: 0,
       parentType: null,
+      uploadFile: false,
+      mandatoryField: false,
     },
   ];
 
@@ -26,6 +28,8 @@ export class MyComponent {
     displayField: 'label',
     childrenField: 'substructures',
   };
+
+  node: any;
 
   onTypeChange(node) {
     console.log(node);
@@ -35,7 +39,7 @@ export class MyComponent {
 
   addNode(node) {
     console.log('here');
-    const activeNode = node;
+    const activeNode = this.tree.treeModel.getNodeById(node.data.id);
     activeNode.data.substructures.push({
       label: '',
       selectedType: '',
@@ -45,5 +49,11 @@ export class MyComponent {
       parentType: activeNode.data.selectedType,
     });
     this.tree.treeModel.update();
+    this.tree.treeModel.getNodeById(node.data.id).expand();
+  }
+
+  changeNodeForModal(node) {
+    this.node = node;
+    this.showModalForFile = true;
   }
 }

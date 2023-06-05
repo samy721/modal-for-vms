@@ -57,6 +57,10 @@
   margin-right: 10px;
   position: absolute;
 }
+.checkbox-label {
+  display: flex;
+  align-items: center;
+}
 .m-center {
   margin: 0 auto;
 }

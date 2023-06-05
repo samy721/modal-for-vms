@@ -35,14 +35,16 @@
             style="margin-top: 5px; margin-bottom: 5px"
           >
             <div style="position:absolute;display:flex;">
-              <input
-                class="form-control name-field"
-                type="text"
-                [(ngModel)]="node.data.label"
-                [id]="'nameField' + node.id"
-                [attr.aria-describedby]="'nameFieldValidator' + node.id"
-                style="position:static"
-              />
+              <div style="display:flex;gap:5px;flex-direction:column">
+                <input
+                  class="form-control name-field"
+                  type="text"
+                  [(ngModel)]="node.data.label"
+                  [id]="'nameField' + node.id"
+                  [attr.aria-describedby]="'nameFieldValidator' + node.id"
+                  style="position:static"
+                />
+              </div>
               <button
                 *ngIf="node.data.selectedType == 'select'"
                 (click)="addNode(node)"
@@ -50,8 +52,21 @@
                 title="Add Node"
                 data-placement="bottom"
                 data-toggle="tooltip"
+                style="background:#f47721;color:white;margin-right:10px"
               >
                 <span class="glyphicon glyphicon-plus"></span>
+              </button>
+              <button
+                *ngIf="node.data.parentType != 'select'"
+                type="button"
+                class="btn btn-primary"
+                data-toggle="modal"
+                data-target="#exampleModalCenterz"
+                id="fileuploadButton"
+                style="background:#f47721;color:white"
+                (click)="changeNodeForModal(node)"
+              >
+                <span class="glyphicon glyphicon-fullscreen"></span>
               </button>
             </div>
             <select
@@ -78,4 +93,62 @@
       </div>
     </ng-template>
   </tree-root>
+</div>
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-primary"
+  data-toggle="modal"
+  data-target="#exampleModalCenter"
+  id="fileuploadButton"
+  style="display:none"
+>
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalCenterz"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">
+          Upload File From User
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div *ngIf="showModalForFile" class="modal-body">
+        <div class="checkbox-label">
+          <input
+            type="checkbox"
+            id="myCheckbox"
+            [(ngModel)]="node.data.uploadFile"
+          />
+          <label for="myCheckbox">Do you want to upload a file?</label>
+        </div>
+        <div *ngIf="node.data.uploadFile" class="checkbox-label">
+          <input
+            type="checkbox"
+            id="myCheckbox"
+            [(ngModel)]="node.data.mandatoryField"
+          />
+          <label for="myCheckbox"
+            >Do you want this field to be Mandatory?</label
+          >
+        </div>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
 </div>
