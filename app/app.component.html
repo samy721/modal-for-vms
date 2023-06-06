@@ -31,10 +31,20 @@
         </button>
       </div>
       <div class="modal-body">
-        <app-my-component></app-my-component>
+        <app-my-component
+          [inputData]="inputdata"
+          (outputResult)="handleOutputResult($event)"
+          (outputData)="handleOutputData($event)"
+        ></app-my-component>
       </div>
       <div class="modal-footer">
-        <button type="button" style="width:100%" class="btn main-bttn-orng">
+        <button
+          [disabled]="!disableAddButton"
+          type="button"
+          style="width:100%"
+          class="btn main-bttn-orng"
+          (click)="onAddClicked()"
+        >
           Add
         </button>
       </div>

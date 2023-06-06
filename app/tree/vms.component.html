@@ -43,10 +43,14 @@
                   [id]="'nameField' + node.id"
                   [attr.aria-describedby]="'nameFieldValidator' + node.id"
                   style="position:static"
+                  (ngModelChange)="onNameChange(node.data)"
                 />
               </div>
               <button
-                *ngIf="node.data.selectedType == 'select'"
+                *ngIf="
+                  node.data.selectedType == 'select' ||
+                  (node.data.parentType == 'select' && node.data.level <= 2)
+                "
                 (click)="addNode(node)"
                 class="btn btn-default btn-sm m-center orange-txt"
                 title="Add Node"
@@ -94,18 +98,6 @@
     </ng-template>
   </tree-root>
 </div>
-<!-- Button trigger modal -->
-<button
-  type="button"
-  class="btn btn-primary"
-  data-toggle="modal"
-  data-target="#exampleModalCenter"
-  id="fileuploadButton"
-  style="display:none"
->
-  Launch demo modal
-</button>
-
 <!-- Modal -->
 <div
   class="modal fade"
@@ -134,6 +126,7 @@
             type="checkbox"
             id="myCheckbox"
             [(ngModel)]="node.data.uploadFile"
+            style="margin-bottom:10px;margin-right:4px"
           />
           <label for="myCheckbox">Do you want to upload a file?</label>
         </div>
@@ -142,6 +135,7 @@
             type="checkbox"
             id="myCheckbox"
             [(ngModel)]="node.data.mandatoryField"
+            style="margin-bottom:10px;margin-right:4px"
           />
           <label for="myCheckbox"
             >Do you want this field to be Mandatory?</label
